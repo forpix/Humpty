@@ -37,4 +37,3 @@ def meta() {
       sh 'Deploy stage'
 	}
     }
-}
