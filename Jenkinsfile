@@ -2,7 +2,6 @@ def nodes = ['Sailfish1', 'master']
 def builders = [:]
 for (x in nodes) {
     def node = x 
-
     builders[node] = {
       node(label) {
       stage ('check thd Node') {
@@ -18,3 +17,4 @@ for (x in nodes) {
 		}
       }
 	 }
+parallel builders
