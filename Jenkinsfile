@@ -6,10 +6,11 @@ stage('Test') {
            pwd;hostname;whoami
            '''
         }
-        catch  {
+        catch (exc) {
             sh '''
             echo 'from the node'
             '''
+            throw
         }
     }
     node('master') {
@@ -20,10 +21,11 @@ stage('Test') {
            pwd;hostname;whoami
            '''
         }
-        catch {
+        catch (exc) {
             sh '''
             echo 'coming out of the station'
             '''
+            throw
         }
     }
 }
