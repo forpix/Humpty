@@ -15,7 +15,6 @@ for (x in nodes) {
 			    error
           '''
           }
-			}
-      
-        
+		}
       }
+	 }
