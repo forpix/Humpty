@@ -3,7 +3,7 @@ def builders = [:]
 for (x in nodes) {
     def node = x 
     builders[node] = {
-      node(label) {
+      node(node) {
       stage ('check thd Node') {
         sh '''
            a=$(docker ps -a| grep alpine | wc -l)
