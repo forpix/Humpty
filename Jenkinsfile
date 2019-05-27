@@ -2,6 +2,7 @@ stage('Test') {
     node('Sailfish1') { 
         checkout scm
     try {
+	    sh '''
            a=$(docker ps -a| grep alpine | wc -l)
            if [$a -ge 1];then
 				echo 'since containers are runnig exiting the node'
@@ -18,27 +19,22 @@ stage('Test') {
 				echo 'since containers are runnig exiting the node'
 				else
 				echo "Running because if condition is satiedfied"
-				meta()
            fi
+	   '''
 		   }
 		 }
            
     }
-        def meta() {
-
+       
+def meta() {
 	stage (Build) {
-
       sh 'Build stage'
 	}
-
 	stage (Test) {
-
       sh 'Test stage'
 	}
-
 	stage (Deploy) {
-
       sh 'Deploy stage'
 	}
-}
+    }
 }
