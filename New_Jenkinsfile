@@ -1,39 +1,47 @@
-stage('Test') {
-    node('Sailfish1') { 
-        checkout scm
-    try {
-	    sh '''
-           a=$(docker ps -a| grep alpine | wc -l)
-           if [$a -ge 1];then
-				echo 'since containers are runnig exiting the node'
-           else
-                echo "Running because if condition is satiedfied"
-			    error
+node {
+	try {
+		stage ('checking for the running container') { 
+			node ('sailfish1') {
+					sh '''
+						a=$(docker ps -a| grep alpine | wc -l)
+						if [$a -ge 1];then
+						echo 'since containers are runnig exiting the node'
+						else
+                		echo "==========Running because if condition is satiedfied========="
+			    	error
+					'''
 			}
-	catch (exc) { 
-            node('master') {
-				hostname;whoami
-				echo '===================getting in to second node========================='
-				b=$(docker ps -a| grep alpine | wc -l)
-			if [$b -ge 1];then
-				echo 'since containers are runnig exiting the node'
-				else
-				echo "Running because if condition is satiedfied"
-           fi
-	   '''
-		   }
-		 }
-           
-    }
-       
-def meta() {
-	stage (Build) {
+		}
+	}
+	catch (exc) {
+	stage ('checking fort the running containers') {
+		node('master') {
+					sh '''
+						b=$(docker ps -a| grep alpine | wc -l)
+						if [$b -ge 1];then
+						echo 'since containers are runnig exiting the node'
+						else
+                		echo "==========Running because if condition is satiedfied========="
+						error
+					'''
+			}
+		}
+	}
+	finally {
+		stage (Build) {
+
       sh 'Build stage'
 	}
+
 	stage (Test) {
+
       sh 'Test stage'
 	}
+
 	stage (Deploy) {
+
       sh 'Deploy stage'
 	}
-    }
+	
+	}
+}
