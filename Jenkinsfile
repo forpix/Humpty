@@ -31,6 +31,7 @@ node {
 		   }
 	     }
       }
+}
 	  
 	 def foo = ["Stage1", "Stage2", "Stage3"]
 
@@ -54,4 +55,4 @@ node {
     generateStage("nonparallel").call()
 }
 
-}
+
