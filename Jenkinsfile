@@ -10,10 +10,10 @@ node {
 							//If the condition is false print the following statement 
 							println("The value is greater than 100"); 
 						}  
-			}
+					}
 			}
 		}
-	}
+	
 	catch (exc) {
 	stage ('checking fort the running containers') {
 		node('master') {
