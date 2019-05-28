@@ -32,7 +32,7 @@ node {
 			}
 		}
 	}
-	def meta () =
+	def meta () {
 	stage (Build) {
       	    sh 'Build stage'
 	  }
@@ -42,4 +42,5 @@ node {
 	stage (Deploy) {
            sh 'Deploy stage'
      }
+	}
 }
