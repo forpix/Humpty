@@ -1,20 +1,47 @@
-def nodes = ['Sailfish1', 'master']
-def builders = [:]
-for (x in nodes) {
-    def node = x 
-    builders[node] = {
-      node(node) {
-      stage ('check thd Node') {
-        sh '''
-           a=$(docker ps -a| grep alpine | wc -l)
-           if [$a -ge 1];then
-				echo 'since containers are runnig exiting the node'
-           else
-                echo "Running because if condition is satiedfied"
-			    error
-          '''
-          }
+node {
+	try {
+		stage ('checking for the running container') { 
+			node ('sailfish1') {
+					sh '''
+						a=$(docker ps -a| grep alpine | wc -l)
+						if [$a -ge 1];then
+						echo 'since containers are runnig exiting the node'
+						else
+                		echo "==========Running because if condition is satiedfied========="
+			    	error
+					'''
+			}
 		}
-      }
-	 }
-parallel builders
+	}
+	catch (exc) {
+	stage ('checking fort the running containers') {
+		node('master') {
+					sh '''
+						b=$(docker ps -a| grep alpine | wc -l)
+						if [$b -ge 1];then
+						echo 'since containers are runnig exiting the node'
+						else
+                		echo "==========Running because if condition is satiedfied========="
+						error
+					'''
+			}
+		}
+	}
+	finally {
+		stage (Build) {
+
+      sh 'Build stage'
+	}
+
+	stage (Test) {
+
+      sh 'Test stage'
+	}
+
+	stage (Deploy) {
+
+      sh 'Deploy stage'
+	}
+	
+	}
+}
