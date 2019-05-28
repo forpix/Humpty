@@ -1,7 +1,7 @@
 node {
 	try {
 		stage ('checking for the running container') { 
-			node ('sailfish1') {
+			node ('Sailfish1') {
 					sh '''
 						a=$(docker ps -a| grep alpine | wc -l)
 						if [$a -ge 1];then
