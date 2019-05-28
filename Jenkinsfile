@@ -2,7 +2,8 @@ node {
 	try {
 		stage ('checking for the running container') { 
 			node ('Sailfish1') {
-					def conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+					int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+					echo "no.of containers in node " + conta_Num
 					if (conta_Num >= 1) { 
 						//If the condition is true print the following statement 
 						println("The value is less than 100"); 
