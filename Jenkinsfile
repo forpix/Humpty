@@ -1,4 +1,5 @@
 node {
+	 def nod_Name = ""
 	try {
 		stage ('checking for the running container') { 
 			node ('Sailfish1') {
@@ -6,7 +7,8 @@ node {
 					echo "no.of containers in node " + conta_Num
 					if (conta_Num >= 1) { 
 						//If the condition is true print the following statement 
-						println("The value is less than 100"); 
+						 nod_Name=master
+						error 'Containers are running';
 						} else { 
 							//If the condition is false print the following statement 
 							println("The value is greater than 100"); 
@@ -17,34 +19,27 @@ node {
 	
 	catch (exc) {
 	stage ('checking fort the running containers') {
-		node('master') {
-					sh '''
-						whoami;hostname;pwd
-						b=$(docker ps -a| grep alpine | wc -l)
-					if [$b -ge 1];then
-						echo 'since containers are runnig exiting the node'
-					else
-						error 'more than one container is running so exiting the node'
-					fi
-					'''
+		node(nod_Name) {
+			int conta_Numbs = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+			echo "no.of containers in node " + conta_Numbs
+			if (conta_Numbs >= 1) { 
+				//If the condition is true print the following statement 
+				error 'Containers are running';
+				} else { 
+				//If the condition is false print the following statement 
+				println("The value is greater than 100"); 
+				}  
 			}
 		}
 	}
-	finally {
-		stage (Build) {
-
-      sh 'Build stage'
-	}
-
+	def meta =
+	stage (Build) {
+      	    sh 'Build stage'
+	  }
 	stage (Test) {
-
-      sh 'Test stage'
+            sh 'Test stage'
 	}
-
 	stage (Deploy) {
-
-      sh 'Deploy stage'
-	}
-	
-	}
+           sh 'Deploy stage'
+     }
 }
