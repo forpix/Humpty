@@ -7,8 +7,6 @@ node {
 					echo "no.of containers in node " + conta_Num
 					if (conta_Num >= 1) { 
 						//If the condition is true print the following statement 
-						 nod_Name=master
-						
 						error 'Containers are running'
 						} else { 
 							//If the condition is false print the following statement 
@@ -20,11 +18,11 @@ node {
 	
 	catch (exc) {
 	stage ('checking fort the running containers') {
-		
-		node('nod_Name') {
+		node('master') {
 			int conta_Numbs = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 			echo "no.of containers in node " + conta_Numbs
 			if (conta_Numbs >= 1) { 
+				meta ()
 				//If the condition is true print the following statement 
 				error 'Containers are running';
 				} else { 
@@ -34,7 +32,7 @@ node {
 			}
 		}
 	}
-	def meta =
+	def meta () =
 	stage (Build) {
       	    sh 'Build stage'
 	  }
