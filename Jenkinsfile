@@ -7,7 +7,6 @@ node {
 					if [$a -ge 1];then
 						echo 'since containers are runnig exiting the node'
 					else
-                				echo "==========Running because if condition is satiedfied========="
 			    			error 'more than one container is running so exiting the node'
 					fi
 					'''
@@ -18,12 +17,11 @@ node {
 	stage ('checking fort the running containers') {
 		node('master') {
 					sh '''
-						whoami;hostnmame;pwd
+						whoami;hostname;pwd
 						b=$(docker ps -a| grep alpine | wc -l)
 					if [$b -ge 1];then
 						echo 'since containers are runnig exiting the node'
 					else
-                				echo "==========Running because if condition is satiedfied========="
 						error 'more than one container is running so exiting the node'
 					fi
 					'''
