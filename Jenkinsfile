@@ -12,6 +12,13 @@ def foo = ["Stage1", "Stage2", "Stage3"]
         }
     }
 }
+
+def showMavenVersion(String a) {
+       sh 'git --version'
+        echo a
+}
+
+
 node {
    try {
 	stage ('checking for the running container') { 
@@ -45,6 +52,7 @@ node {
 	     }
       }
 	node {
+showMavenVersion('stagees')
     parallel parallelStagesFromMap
 
     generateStage("skipped") // no invocation, stage is skipped
