@@ -22,7 +22,6 @@ node {
 			int conta_Numbs = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 			echo "no.of containers in node " + conta_Numbs
 			if (conta_Numbs >= 1) { 
-				meta 
 				//If the condition is true print the following statement 
 				error 'Containers are running';
 				} else { 
@@ -32,14 +31,5 @@ node {
 			}
 		}
 	}
-	def meta = 
-	stage (Build) {
-      	    sh 'Build stage'
-	  }
-	stage (Test) {
-            sh 'Test stage'
-	}
-	stage (Deploy) {
-           sh 'Deploy stage'
-     }
+	
 }
