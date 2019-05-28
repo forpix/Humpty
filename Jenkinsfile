@@ -1,13 +1,14 @@
 def foo = ["Stage1", "Stage2", "Stage3"]
 
 	def parallelStagesFromMap = foo.collectEntries {
-    ["Build ${it}" : generateStage(it)]
+   	 ["Build ${it}" : generateStage(it)]
 		}
-
 	def generateStage(bar) {
-    return {
+    	return {
         stage("Build ${bar}") {
-            echo "Building for ${bar}"
+        echo "Building for ${bar}"
+	sh 'pwd;hostname;whoami'
+	echo 'lets try this'
         }
     }
 }
@@ -35,7 +36,7 @@ node {
 		echo "no.of containers in node " + conta_Numbs
 		if (conta_Numbs >= 1) { 
 		//If the condition is true print the following statement 
-		sleep 30
+		sleep 15
 		} else { 
 		//If the condition is false print the following statement 
 		println("The value is greater than 100");
