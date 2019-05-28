@@ -1,3 +1,16 @@
+def foo = ["Stage1", "Stage2", "Stage3"]
+
+	def parallelStagesFromMap = foo.collectEntries {
+    ["Build ${it}" : generateStage(it)]
+		}
+
+	def generateStage(bar) {
+    return {
+        stage("Build ${bar}") {
+            echo "Building for ${bar}"
+        }
+    }
+}
 node {
    try {
 	stage ('checking for the running container') { 
@@ -23,7 +36,6 @@ node {
 		if (conta_Numbs >= 1) { 
 		//If the condition is true print the following statement 
 		sleep 30
-		error 'Containers are running';
 		} else { 
 		//If the condition is false print the following statement 
 		println("The value is greater than 100");
@@ -31,28 +43,17 @@ node {
 		   }
 	     }
       }
-}
-	  
-	 def foo = ["Stage1", "Stage2", "Stage3"]
-
-	def parallelStagesFromMap = foo.collectEntries {
-    ["Build ${it}" : generateStage(it)]
-		}
-
-	def generateStage(bar) {
-    return {
-        stage("Build ${bar}") {
-            echo "Building for ${bar}"
-        }
-    }
-}
-
-node {
+	node {
     parallel parallelStagesFromMap
 
     generateStage("skipped") // no invocation, stage is skipped
 
     generateStage("nonparallel").call()
 }
+}
+	  
+	 
+
+
 
 
