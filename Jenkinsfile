@@ -8,7 +8,8 @@ node {
 					if (conta_Num >= 1) { 
 						//If the condition is true print the following statement 
 						 nod_Name=master
-						error 'Containers are running';
+						
+						error 'Containers are running'
 						} else { 
 							//If the condition is false print the following statement 
 							println("The value is greater than 100"); 
@@ -19,7 +20,8 @@ node {
 	
 	catch (exc) {
 	stage ('checking fort the running containers') {
-		node(nod_Name) {
+		
+		node('nod_Name') {
 			int conta_Numbs = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 			echo "no.of containers in node " + conta_Numbs
 			if (conta_Numbs >= 1) { 
