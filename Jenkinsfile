@@ -4,11 +4,12 @@ node {
 			node ('Sailfish1') {
 					sh '''
 						a=$(docker ps -a| grep alpine | wc -l)
-						if [$a -ge 1];then
+					if [$a -ge 1];then
 						echo 'since containers are runnig exiting the node'
-						else
-                		echo "==========Running because if condition is satiedfied========="
-			    	error
+					else
+                				echo "==========Running because if condition is satiedfied========="
+			    			error 'more than one container is running so exiting the node'
+					fi
 					'''
 			}
 		}
@@ -17,12 +18,14 @@ node {
 	stage ('checking fort the running containers') {
 		node('master') {
 					sh '''
+						whoami;hostnmame;pwd
 						b=$(docker ps -a| grep alpine | wc -l)
-						if [$b -ge 1];then
+					if [$b -ge 1];then
 						echo 'since containers are runnig exiting the node'
-						else
-                		echo "==========Running because if condition is satiedfied========="
-						error
+					else
+                				echo "==========Running because if condition is satiedfied========="
+						error 'more than one container is running so exiting the node'
+					fi
 					'''
 			}
 		}
