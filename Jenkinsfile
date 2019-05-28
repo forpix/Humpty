@@ -23,6 +23,7 @@ node {
 			echo "no.of containers in node " + conta_Numbs
 			if (conta_Numbs >= 1) { 
 				//If the condition is true print the following statement 
+				sleep 30
 				error 'Containers are running';
 				} else { 
 				//If the condition is false print the following statement 
