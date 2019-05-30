@@ -49,14 +49,7 @@ node {
 		   }
 	     }
       }
-	node {
-showMavenVersion('stagees')
-    parallel parallelStagesFromMap
 
-    generateStage("skipped") // no invocation, stage is skipped
-
-    generateStage("nonparallel").call()
-}
 }
 	  
 	 
