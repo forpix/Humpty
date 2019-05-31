@@ -1,0 +1,83 @@
+def showM(String a) {
+      stage ('Spinnig Conta') {
+          deletingContainer ('Checking existence')
+          sh 'docker run -d --name qe1instance alpine'
+      }
+       stage ('Pull by commit') {
+           sh 'docker ps -a'
+       }
+       stage ('Atc') {
+           sh 'docker ps'
+       }
+       stage ('Security') {
+           sh '''
+           docker ps -a | grep 'alpine' | wc -l
+           sleep 30
+           '''
+       }
+        stage ('Security') {
+           sh 'docker ps -a | grep seconds | wc -l'
+       }
+       stage ('Deleting Conta') {
+           sh 'docker rm -f  qe1instance'
+       }
+       
+}
+
+def deletingContainer (String b) {
+   sh '''
+   x=$(docker ps -aq --filter "name=qe1instance" | grep -q .  && echo Found || echo Not Found)
+    if [ $x=Found ]; 
+    then 
+	   docker rm -f qe1instance
+	   sleep 30
+else 
+	    echo 'container is not created' 
+fi
+    '''
+}
+
+
+
+
+node () {
+
+    stage ('checking for the running container') { 
+	
+	   node ('Sailfish1') {
+	   
+		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+		
+		echo "no.of containers in node " + conta_Num
+		
+		if (conta_Num >= 1) { 
+		    
+		    deletingContainer ('Checking existence')
+		
+		//If the condition is true so, coming out of the Sailfish1 node and getting in to Sailfish2
+		echo 'since Sailfish1 is already have a spinned container, we running it in Sailfish2 node'
+		
+		node ('master'){
+		    sleep 30 //sleep for one minute
+		    
+		    
+		    echo "no.of containers in node " + conta_Num
+		    
+			if (conta_Num >= 1) { 
+			deletingContainer ('Checking existence')
+			    
+		    showM('all the stages')  
+			}
+		}
+		
+		
+		} else { 
+		
+		//If the condition is false so, calling the all the stages in Sailfish1 node 
+		deletingContainer ('Checking existence')
+			showM('all the stages')  
+		
+			       }  
+		        }
+		    }
+}
