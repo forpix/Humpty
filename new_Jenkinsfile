@@ -38,8 +38,7 @@ fi
 }
 
 
-
-
+timestamps {
 node () {
 
     stage ('checking for the running container') { 
@@ -80,4 +79,5 @@ node () {
 			       }  
 		        }
 		    }
+}
 }
