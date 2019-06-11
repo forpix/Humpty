@@ -1,4 +1,13 @@
-def showM(String a) {
+def sailfishNodeA(String c) {
+			node ('Sailfish1'){         				//Assigning the Node
+			
+			deletingContainer ('Checking existence')   //Deleting the Conta if existed
+			
+			showM('all the stages') 			      // calling the all stages 
+			}
+		}
+		
+	def showM(String a) {
       stage ('Spinnig Conta') {
           deletingContainer ('Checking existence')
           sh 'docker run -d --name qe1instance alpine'
@@ -39,43 +48,59 @@ fi
 
 
 timestamps {
+
   node () {
 
-    stage ('checking for the running container') { 
+    stage ('checking for Condition') { 
 	
-	   node ('Sailfish1') {
+	 node ('Sailfish1') {
+	   
 	   	cleanWs()
 	   
-		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+				int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		
-		echo "no.of containers in node " + conta_Num
-		
-		if (conta_Num >= 1) { 
+	if (conta_Num >= 1) {
+
+				echo "no.of containers in Sailfish1 " + conta_Num
 		    
-		    deletingContainer ('Checking existence')
+				deletingContainer ('Checking existence')
 		
-		//If the condition is true so, coming out of the Sailfish1 node and getting in to Sailfish2
+				//If the condition is true so, coming out of the Sailfish1 node and getting in to Sailfish2
 		
-		echo 'since Sailfish1 is already have a spinned container, we running it in Sailfish2 node'
+				echo 'Since Sailfish1 is already have a spinned container, we running it in Sailfish2 node'
 		
-		node ('master'){
-		    sleep 15//sleep for one minute
+    node ('master'){
+		
+				sleep 15//sleep for one minute
 		    
-		    echo "no.of containers in node " + conta_Num
-		    
-			if (conta_Num >= 1) { 
-			deletingContainer ('Checking existence')
-			    
-		    	showM('all the stages')  
+			if (conta_Num >= 1) {
+			
+				echo "No.of containers in available in Master are " + conta_Num
+				
+				//If the condition is true
+				
+				sleep 180 //sleeping for 3 mints 
+				
+			node ('Sailfish1'){
+				
+				deletingContainer ('Checking existence')
+				
+				if (conta_Num >= 1) {
+				
+				echo "No.of containers in available in Master are " + conta_Num
+				
+				//If the condition is true
+				
+					}
+			    }
+		    	 
 			}
 		}
 		
 		
 		} else { 
 		
-		//If  condition is false so, calling the all the stages in Sailfish1 node 
-		deletingContainer ('Checking existence')
-			showM('all the stages')  
+			sailfishNodeA('Calling the Stages')
 		
 			       }  
 		        }
