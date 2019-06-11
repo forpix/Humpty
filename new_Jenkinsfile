@@ -99,11 +99,7 @@ timestamps {
 		  
 		   wholeStage ('Calling again') 
 		   
-		} else { 
-		
-			sailfishNodeA('Calling the Stages')
-		
-			       }  
+		}   
 		        }
 		    }
 		}
