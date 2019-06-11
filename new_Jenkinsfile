@@ -1,4 +1,7 @@
-def sailfishNodeA(String c) {
+		 
+		 
+		 
+	def sailfishNodeA(String c) {
 			node ('Sailfish1'){         				//Assigning the Node
 			
 			deletingContainer ('Checking existence')   //Deleting the Conta if existed
@@ -51,16 +54,20 @@ timestamps {
 
   node () {
 
-    stage ('checking for Condition') { 
+    stage ('checking for Condition') {
+
+		def wholeStage (String d) {
 	
 	 node ('Sailfish1') {
 	   
 	   	cleanWs()
+		
+		
 	   
-		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+				int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		
 	if (conta_Num != 0) {
-
+	
 				echo "no.of containers in Sailfish1 " + conta_Num
 		    
 				deletingContainer ('Checking existence')
@@ -71,7 +78,7 @@ timestamps {
 		
     node ('master'){
 		
-			sleep 15//sleep for one minute
+				sleep 15//sleep for one minute
 		    
 			if (conta_Num >= 1) {
 			
@@ -79,29 +86,25 @@ timestamps {
 				
 				//If the condition is true
 				
-				sleep 180 //sleeping for 3 mints 
+				}else {
 				
-			node ('Sailfish1'){
-				
-				deletingContainer ('Checking existence')
-				
-				if (conta_Num >= 1) {
-				
-				echo "No.of containers in available in Master are " + conta_Num
-				
-				//If the condition is true
-				
-				  }
-			    }
-		       }
-		}
-		
+					deletingContainer ('Checking existence')
+					showM('Calling allStages')
+				   }
+				}			
+			}
+		  }  //closing the funcion of wholeStage
+		  
+		  sleep 180 // wait for the 3 minutes to check again the empty node
+		  
+		   wholeStage ('Calling again') 
+		   
 		} else { 
 		
 			sailfishNodeA('Calling the Stages')
 		
 			       }  
-		          }
+		        }
 		    }
-            }
-    }
+		}
+}
