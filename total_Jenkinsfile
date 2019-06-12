@@ -1,6 +1,6 @@
 def sailfishNodeA(String c) {
 			
-				if (conta_Num = 0) {
+				if (conta_Num == 0) {
 				
 					echo "no.of containers in Sailfish1 " + conta_Num
 					
