@@ -1,4 +1,6 @@
 def sailfishNodeA(String c) {
+	
+		node ('Sailfish1'){ //Assigning the Node
 
 			int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 			
@@ -6,9 +8,7 @@ def sailfishNodeA(String c) {
 				
 					echo "no.of containers in Sailfish1 " + conta_Num
 					
-					cleanWs()
-					
-					node ('Sailfish1'){         				//Assigning the Node
+					cleanWs()        				
 			
 					deletingContainer ('Checking existence')   //Deleting the Conta if existed
 			
@@ -17,7 +17,6 @@ def sailfishNodeA(String c) {
 				}
 			}
 		}
-		
 		
 	def allStages(String a) {
 	
