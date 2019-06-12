@@ -13,10 +13,6 @@ def sailfishNodeA(String c) {
 					allStages('all the stages') 			      // calling the all stages 
 				
 				}
-			}else { 
-				sleep 60
-				sailfishNodeB('Calling theSail')
-				
 			}
 		}
 		//try to add the else condition in the above function too with sailfishNodeB inside in it lets see the resu;t
