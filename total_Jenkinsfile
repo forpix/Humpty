@@ -84,7 +84,7 @@ timestamps {
 		
 				echo 'getting in to Sailfish2 as there were some Contas are running in Sailfish1'
 				
-				sailfishNodeB('Calling the Stages')
+				sailfishNodeA('Calling the Stages')
 				
 			      }       
 		      }
