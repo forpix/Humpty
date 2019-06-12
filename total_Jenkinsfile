@@ -78,7 +78,7 @@ timestamps {
 				echo 'starting the stages in Sailfish1, As no conta is spinned up'
 				
 				allStages('Calling allStages')
-		
+	
 		} else { 
 		
 				echo 'getting in to Sailfish2 as there were some Contas are running in Sailfish1'
@@ -96,7 +96,7 @@ timestamps {
 	
 	def sailfishNodeB(String e) {
 	
-		node ('master'){  //Assigning the Node Master=Sailfish2
+		node ('master'){  // Master=Sailfish2
 		
 					int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		
