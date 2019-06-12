@@ -20,6 +20,8 @@ def sailfishNodeA(String c) {
 		
 		
 	def sailfishNodeB(String e) {
+	
+		node ('master'){         					//Assigning the Node Master
 		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		if (conta_Num == 0) {  
 		
@@ -27,8 +29,7 @@ def sailfishNodeA(String c) {
 			
 				cleanWs()
 			
-				node ('master'){         					//Assigning the Node Master
-			
+				
 				deletingContainer ('Checking existence')   //Deleting the Conta if existed
 			
 				allStages('all the stages') 			      // calling the all stages 
