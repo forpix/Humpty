@@ -88,12 +88,12 @@ timestamps {
 
   node () {
 	
-	int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+	
 	
     stage ('checking for Condition') {
 
 	node ('Sailfish1') {
-		
+		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 	 if (conta_Num == 0) {
 
 				echo "no.of containers in Sailfish1 " + conta_Num
