@@ -1,5 +1,5 @@
 def sailfishNodeA(String c) {
-			
+			int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 				if (conta_Num == 0) {
 				
 					echo "no.of containers in Sailfish1 " + conta_Num
