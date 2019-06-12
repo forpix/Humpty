@@ -1,6 +1,6 @@
 def sailfishNodeA(String c) {
 	
-		node ('Sailfish1'){ //Assigning the Node
+		node ('Sailfish1'){ 								//Assigning the Node
 
 			int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 			
@@ -14,6 +14,10 @@ def sailfishNodeA(String c) {
 			
 					allStages('all the stages') 			      // calling the all stages 
 				
+				}else {
+						
+						sailfishNodeC('Calling Master')
+						
 				}
 			}
 		}
@@ -73,8 +77,6 @@ timestamps {
 		    
 				deletingContainer ('Checking existence')
 		
-				//If the condition is true so, coming out of the Sailfish1 node and getting in to Sailfish2
-		
 				echo 'starting the stages in Sailfish1, As no conta is spinned up'
 				
 				allStages('Calling allStages')
@@ -84,8 +86,6 @@ timestamps {
 				echo 'getting in to Sailfish2 as there were some Contas are running in Sailfish1'
 				
 				sailfishNodeB('Calling theSail')
-				
-				echo '================================================================='
 				
 			      }       
 		      }
@@ -106,14 +106,15 @@ timestamps {
 			
 					cleanWs()
 			
-					deletingContainer ('Checking existence')   //Deleting the Conta if existed
+					deletingContainer ('Checking existence')  		 //Deleting the Conta if existed
 			
-					allStages('all the stages') 			      // calling the all stages 
+					allStages('all the stages') 			      			// calling the all stages 
 			
 		 }else {
 		 
-		 echo 'getting in to Sailfish1 as there were some Contas are running in Sailfish2'
-			sleep 60                                    //waiting time is 3 minutes
+			 sleep 60                                   		 //waiting time is 3 minutes
+		 
+			 echo 'getting in to Sailfish1 as there were some Contas are running in Sailfish2'	
 			
 			sailfishNodeA('Calling theSail')
 			
@@ -121,4 +122,23 @@ timestamps {
 		 
 	 }
 	
+	}
+	
+	def sailfishNodeC(String f) {
+	
+	node ('master') {
+	sleep 35
+				int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+		
+				if (conta_Num == 0) {  
+		
+					echo "no.of containers in Sailfish1 " + conta_Num
+			
+					cleanWs()
+			
+					deletingContainer ('Checking existence')  		 //Deleting the Conta if existed
+			
+					allStages('all the stages') 		
+			
+		} 
 	}
