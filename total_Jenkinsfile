@@ -96,7 +96,7 @@ timestamps {
 	
 	def sailfishNodeB(String e) {
 	
-		node ('master'){  // Master=Sailfish2
+		node ('Sailfish2'){  // Master=Sailfish2
 		
 					int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		
@@ -126,7 +126,7 @@ timestamps {
 	
 	def sailfishNodeC(String f) {
 	
-	node ('master') {
+	node ('Sailfish2') {
 	sleep 35
 				int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		
