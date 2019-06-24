@@ -24,7 +24,7 @@ def sailfishNodeC(String f) {   //check-4 in Node-2
 		allStages('all the stages') 		
 			
 		}else {
-		errot 'no Node is free to run the job'
+		error 'no Node is free to run the job'
 		}
 	}
 }	
