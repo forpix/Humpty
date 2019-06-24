@@ -1,6 +1,5 @@
-def sailfishNodeA(String c) {   check-3 in Node-1
-	
-	node ('Sailfish1'){ 								//Assigning the Node
+def sailfishNodeA(String c) {   //check-3 in Node-1
+	node ('Sailfish1'){ 			//Assigning the Node
 		echo 'check-3 in Node-1'
 		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
 		if (conta_Num == 0) {	
