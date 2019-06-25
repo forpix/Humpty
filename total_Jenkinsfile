@@ -51,6 +51,9 @@ def allStages(String a) { 			//all the stages
        }
        stage ('Deleting Conta') {
            sh 'docker rm -f  qe1instance'
+	   ansiColor('xterm') {
+                            echo "\u001B[31mException occurred:\u001B[m"
+                        }
        }
        	stage('Mail_sending'){
 		if (currentBuild.currentResult == 'FAILURE') {
@@ -108,7 +111,7 @@ timestamps {
 			deletingContainer ('Checking existence')  	       //Deleting the Conta if existed
 			allStages('all the stages') 			      // calling the all stages 
 		 }else {
-			 sleep 60                                   	     //waiting time is 3 minutes
+			 sleep 30                                   	     //waiting time is 3 minutes
 			 echo 'getting in to Sailfish1 as there were some Contas are running in Sailfish2'	
 			 sailfishNodeA('Calling theSail')
 		    }
