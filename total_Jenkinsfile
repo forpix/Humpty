@@ -54,9 +54,9 @@ def allStages(String a) { 			//all the stages
        }
        	stage('Mail_sending'){
 		if (currentBuild.currentResult == 'FAILURE') {
-        emailext importanceHigh:true ,to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName, body: '$DEFAULT_CONTENT \n\nChanges:\n$CHANGES\n\n Leave/Join this notification:'
+        emailext importanceHigh:true ,to: "forpix321@gmail.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName, body: '$DEFAULT_CONTENT \n\nChanges:\n$CHANGES\n\n Leave/Join this notification:'
     } else if (currentBuild.currentResult == 'SUCCESS' && currentBuild.getPreviousBuild() && currentBuild.getPreviousBuild().getResult().toString() != "SUCCESS") {
-        emailext to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName + " (build is back to normal)", body: '$DEFAULT_CONTENT\n\nChanges:\n$CHANGES\nCause: $CAUSE\n\n\nLeave/Join this notification: ', attachLog: true, compressLog: true
+        emailext to: "forpix321@gmail.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName + " (build is back to normal)", body: '$DEFAULT_CONTENT\n\nChanges:\n$CHANGES\nCause: $CAUSE\n\n\nLeave/Join this notification: ', attachLog: true, compressLog: true
     }
 		
 			}
