@@ -1,14 +1,15 @@
+
 def sailfishNodeA(String c) {   //check-3 in Node-1
 	node ('Sailfish1'){ 			//Assigning the Node
 		echo 'check-3 in Node-1'
 		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
-		if (conta_Num == 0) {	
+	  if (conta_Num == 0) {	
 		echo "no.of containers in Sailfish1 " + conta_Num		
 		cleanWs()        				
 		deletingContainer ('Checking existence')   //Deleting the Conta if existed
-		allStages('all the stages') 			      // calling the all stages 	
-		}else {
-				sailfishNodeC('Calling Master')		
+		allStages('all the stages') 	          // calling the all stages 	
+	  } else {
+		sailfishNodeC('Calling Master')		
 			 }
 			}
 		} 
@@ -17,21 +18,21 @@ def sailfishNodeC(String f) {   //check-4 in Node-2
 		echo 'check-4 in Node-2'
 		sleep 35	
 		int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
-		if (conta_Num == 0) {  
+	if (conta_Num == 0) {  
 		echo "no.of containers in Sailfish1 " + conta_Num
 		cleanWs()
 		deletingContainer ('Checking existence')  		 //Deleting the Conta if existed
-		allStages('all the stages') 		
-			
-		}else {
-		error 'no Node is free to run the job'
+		allStages('all the stages') 			
+	}else {
+		echo "\u001B[31mException occurred: \u001B[m"
+		error 'no Node is free to run the Job'
 		}
 	}
 }	
-def allStages(String a) { //all the stages 
+def allStages(String a) { 			//all the stages 
       stage ('Spinnig Conta') {
-	 deletingContainer ('Checking existence')
-	 sh 'docker run -d --name qe1instance alpine'
+	   deletingContainer ('Checking existence')
+	   sh 'docker run -d --name qe1instance alpine'
       }
        stage ('Pull by commit') {
            sh 'docker ps -a'
@@ -53,9 +54,9 @@ def allStages(String a) { //all the stages
        }  
     }
 
-def deletingContainer (String b) { 		//Container deleting function
+def deletingContainer (String b) { 			//Container deleting function
    sh '''
-   x=$(docker ps -aq --filter "name=qe1instance" | grep -q .  && echo Found || echo Not Found)
+      x=$(docker ps -aq --filter "name=qe1instance" | grep -q .  && echo Found || echo Not Found)
   if [ $x=Found ]; 
   then 
      docker rm -f qe1instance
@@ -65,13 +66,12 @@ def deletingContainer (String b) { 		//Container deleting function
   fi
     '''
 }
-timestamps {
 
+timestamps {
   node () {	
 	stage ('checking for Condition') { 
-
-	node ('Sailfish1') {
-	echo 'check-1 in Node-1'
+	 node ('Sailfish1') {
+	 echo 'check-1 in Node-1'
 	 int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')	
 	 if (conta_Num == 0) {   		//check-1 in Node-1
 		echo 'check-1 in Node-1'
@@ -79,7 +79,7 @@ timestamps {
 		deletingContainer ('Checking existence')
 		echo 'starting the stages in Sailfish1, As no conta is spinned up'
 		allStages('Calling allStages')
-		} else { 
+	} else { 
 		echo 'getting in to Sailfish2 as there were some Contas are running in Sailfish1'	
 		sailfishNodeB('Calling theSail')
 			      }       
@@ -87,7 +87,12 @@ timestamps {
                }
         }
 }
-	def sailfishNodeB(String e) {  //check-2 in Node-2
+if (currentBuild.currentResult == 'FAILURE') {
+        emailextcfs importanceHigh:true ,to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName, body: '$DEFAULT_CONTENT \n\nChanges:\n$CHANGES\n\n Leave/Join this notification:'
+    } else if (currentBuild.currentResult == 'SUCCESS' && currentBuild.getPreviousBuild() && currentBuild.getPreviousBuild().getResult().toString() != "SUCCESS") {
+        emailextcfs to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName + " (build is back to normal)", body: '$DEFAULT_CONTENT\n\nChanges:\n$CHANGES\nCause: $CAUSE\n\n\nLeave/Join this notification: ', attachLog: true, compressLog: true
+    } 
+	def sailfishNodeB(String e) {  						//check-2 in Node-2
 		node ('Sailfish2'){  						// Master=Sailfish2
 			echo 'check-2 in Node-2'
 			int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
@@ -97,7 +102,7 @@ timestamps {
 			deletingContainer ('Checking existence')  	       //Deleting the Conta if existed
 			allStages('all the stages') 			      // calling the all stages 
 		 }else {
-			 sleep 60                                   		 //waiting time is 3 minutes
+			 sleep 60                                   	     //waiting time is 3 minutes
 			 echo 'getting in to Sailfish1 as there were some Contas are running in Sailfish2'	
 			 sailfishNodeA('Calling theSail')
 		    }
