@@ -55,6 +55,10 @@ def allStages(String a) { 			//all the stages
                             echo "\u001B[31mException occurred:\u001B[m"
                         }
        }
+       stage("Run Voter") {
+            checkout scm
+            load "Jenkinsfile_Test"
+    }
        	stage('Mail_sending'){
 		if (currentBuild.currentResult == 'FAILURE') {
         emailext importanceHigh:true ,to: "forpix321@gmail.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName, body: '$DEFAULT_CONTENT \n\nChanges:\n$CHANGES\n\n Leave/Join this notification:'
