@@ -40,7 +40,7 @@ def allStages(String a) { 			//all the stages
        stage ('Atc') {
            sh 'docker ps'
        }
-       stage ('Security') {
+       stage ('\u001B Security') {
            sh '''
            docker ps -a | grep 'alpine' | wc -l
            sleep 30
@@ -51,7 +51,16 @@ def allStages(String a) { 			//all the stages
        }
        stage ('Deleting Conta') {
            sh 'docker rm -f  qe1instance'
-       }  
+       }
+       	stage('Mail_sending'){
+		if (currentBuild.currentResult == 'FAILURE') {
+        emailextcfs importanceHigh:true ,to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName, body: '$DEFAULT_CONTENT \n\nChanges:\n$CHANGES\n\n Leave/Join this notification:'
+    } else if (currentBuild.currentResult == 'SUCCESS' && currentBuild.getPreviousBuild() && currentBuild.getPreviousBuild().getResult().toString() != "SUCCESS") {
+        emailextcfs to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName + " (build is back to normal)", body: '$DEFAULT_CONTENT\n\nChanges:\n$CHANGES\nCause: $CAUSE\n\n\nLeave/Join this notification: ', attachLog: true, compressLog: true
+    }
+		
+			}
+       
     }
 
 def deletingContainer (String b) { 			//Container deleting function
@@ -85,14 +94,7 @@ timestamps {
 			      }       
 		      }
                }
-	stage('Mail_sending'){
-		if (currentBuild.currentResult == 'FAILURE') {
-        emailextcfs importanceHigh:true ,to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName, body: '$DEFAULT_CONTENT \n\nChanges:\n$CHANGES\n\n Leave/Join this notification:'
-    } else if (currentBuild.currentResult == 'SUCCESS' && currentBuild.getPreviousBuild() && currentBuild.getPreviousBuild().getResult().toString() != "SUCCESS") {
-        emailextcfs to: "mahammad.ali01@sap.com", subject: currentBuild.currentResult + ": " + currentBuild.fullProjectName + " (build is back to normal)", body: '$DEFAULT_CONTENT\n\nChanges:\n$CHANGES\nCause: $CAUSE\n\n\nLeave/Join this notification: ', attachLog: true, compressLog: true
-    }
-		
-			}	
+	
         }
 }
  
