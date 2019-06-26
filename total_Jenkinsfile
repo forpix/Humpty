@@ -40,12 +40,6 @@ def allStages(String a) { 			//all the stages
        stage ('Atc') {
            sh 'docker ps'
        }
-       stage ('\u001B Security') {
-           sh '''
-           docker ps -a | grep 'alpine' | wc -l
-           sleep 30
-           '''
-       }
         stage ('Security') {
            sh 'docker ps -a | grep seconds | wc -l'
        }
