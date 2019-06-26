@@ -77,7 +77,7 @@ timestamps {
 		echo 'starting the stages in Sailfish1, As no conta is spinned up'
 		allStages('Calling allStages')
 	} else { 
-		echo 'getting in to Sailfish2 as there were some Contas are running in Sailfish1'	
+		echo 'getting in to Sailfish2 as there are some Contas are running in Sailfish1'	
 		sailfishfunB('Calling theSail')
 			      }       
 		      }
@@ -97,7 +97,7 @@ timestamps {
 			allStages('all the stages') 			      // calling the all stages 
 		 }else {
 			 sleep 30                                   	     //waiting time is 3 minutes
-			 echo 'getting in to Sailfish1 as there were some Contas are running in Sailfish2'	
+			 echo 'getting in to Sailfish1 as there are some Contas are running in Sailfish2'	
 			 sailfishfunA('Calling theSail')
 		    }
 		 
