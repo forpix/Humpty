@@ -24,6 +24,12 @@ def sailfishfunC(String f) {   //check-4 in Node-2
 		deletingContainer ('Checking existence')  		 //Deleting the Conta if existed
 		allStages('all the stages') 			
 	}else {
+		def userInput = input(
+               id: 'userInput', message: 'Let\'s promote?', parameters: [
+               [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
+                  ])
+		echo ("Env: "+userInput)
+		sleep userInput
 		error 'no Node is free to run the Job'
 		}
 	}
