@@ -25,8 +25,8 @@ def sailfishfunC(String f) {   //check-4 in Node-2
 		allStages('all the stages') 			
 	}else {
 		def userInput = input(
-               id: 'userInput', message: 'Give the give the Sleep Time?', parameters: [
-               [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Time will be in Seconds', name: 'Sleep']
+               id: 'userInput', message: 'Give the Sleep Time?', parameters: [
+               [$class: 'TextParameterDefinition', defaultValue: '60', description: 'Time will be in Seconds', name: 'Sleep']
                   ])
 		echo ("Sleeptime: "+userInput)
 		sleep userInput
