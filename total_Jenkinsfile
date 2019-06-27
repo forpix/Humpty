@@ -30,7 +30,7 @@ def sailfishfunC(String f) {   //check-4 in Node-2
                   ])
 		echo ("Env: "+userInput)
 		sleep userInput
-		if (!userInput){
+		if (userInput){
 		sailfishfunA ('Calling again')
 		}else {
 		error 'no Node is free to run the Job'
