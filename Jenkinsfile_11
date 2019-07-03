@@ -50,7 +50,7 @@ stage('Test') {
 			echo 'starting the stages in Sailfish1, As no conta is spinned up'
 			allStages('Calling allStages')
 			}else {
-				sleep 45
+				sleep 80
 			}
             }
             finally {
