@@ -1,0 +1,73 @@
+// Jenkinsfile (Scripted Pipeline)
+
+def deletingContainer (String b) { 			//Container deleting function
+   sh '''
+      x=$(docker ps -aq --filter "name=qe1instance" | grep -q .  && echo Found || echo Not Found)
+  if [ $x=Found ]; 
+  then 
+     docker rm -f qe1instance
+     sleep 15 
+  else 
+    echo 'container is not created' 
+  fi
+    '''
+}
+def allStages(String a) { 			//all the stages 
+      stage ('Spinnig Conta') {
+	   deletingContainer ('Checking existence')
+	   sh 'docker run -d --name qe1instance alpine'
+      }
+       stage ('Pull by commit') {
+           sh 'docker ps -a'
+       }
+       stage ('Atc') {
+           sh 'docker ps'
+       }
+        stage ('Security') {
+           sh 'docker ps -a | grep seconds | wc -l'
+       }
+       stage ('Deleting Conta') {
+           sh 'docker rm -f  qe1instance'
+	   ansiColor('xterm') {
+                            echo "\u001B[31mJust checking\u001B[m"
+                        }
+       		}
+      
+     }
+stage('Build') {
+    /* .. snip .. */
+}
+
+stage('Test') {
+    parallel Sailfish1: {
+        node('Sailfish1') {
+            try {
+			int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+			echo "no.of containers in Sailfish1 " + conta_Num
+			if (conta_Num == 0) {   		//check-1 in Node-1
+			echo 'check-1 in Node-1'
+			deletingContainer ('Checking existence')
+			echo 'starting the stages in Sailfish1, As no conta is spinned up'
+			allStages('Calling allStages')
+		
+				}
+            }
+            finally {
+                println 'lets see this'
+            }
+        }
+    },
+    Sailfish2: {
+        node('Sailfish2') {
+           int conta_Num = sh(returnStdout: true, script: 'docker ps -a| grep alpine | wc -l')
+			echo "no.of containers in Sailfish1 " + conta_Num
+			if (conta_Num == 0) {   		//check-1 in Node-1
+			echo 'check-1 in Node-1'
+			deletingContainer ('Checking existence')
+			echo 'starting the stages in Sailfish1, As no conta is spinned up'
+			allStages('Calling allStages')
+		
+				}
+        }
+    }
+}
