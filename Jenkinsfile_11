@@ -49,8 +49,9 @@ stage('Test') {
 			deletingContainer ('Checking existence')
 			echo 'starting the stages in Sailfish1, As no conta is spinned up'
 			allStages('Calling allStages')
-		
-				}
+			}else {
+				sleep 45
+			}
             }
             finally {
                 println 'lets see this'
@@ -66,8 +67,10 @@ stage('Test') {
 			deletingContainer ('Checking existence')
 			echo 'starting the stages in Sailfish1, As no conta is spinned up'
 			allStages('Calling allStages')
-		
-				}
+			}else {
+				sleep 45
+			}
+				
         }
     }
 }
